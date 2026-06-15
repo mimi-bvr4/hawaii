@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Hawaii ʻOhana Reunion 2026</title>
+<style>
+  :root{
+    --sand:#FAF6EF; --ink:#3a2f28; --muted:#8a7d72; --line:#ece3d8;
+    --coral:#D85A30; --coral-bg:#FAECE7; --coral-ink:#7a3017;
+    --teal:#0F6E56; --teal-bg:#E1F5EE; --amber-bg:#FAEEDA; --amber-ink:#854F0B;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--sand);color:var(--ink);line-height:1.5;}
+  .wrap{max-width:520px;margin:0 auto;min-height:100vh;padding-bottom:76px;}
+  header{background:var(--coral-bg);padding:18px 18px 16px;}
+  header .eyebrow{font-size:12px;color:var(--coral-ink);margin:0;}
+  header h1{font-size:21px;margin:2px 0 0;color:#4A1B0C;font-weight:600;}
+  .screen{display:none;padding:16px 18px;}
+  .screen.active{display:block;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 12px;}
+  .countdown{background:var(--teal-bg);border-radius:14px;padding:16px;text-align:center;margin-bottom:14px;}
+  .countdown .n{font-size:34px;font-weight:600;color:#04342C;line-height:1;}
+  .countdown .l{font-size:12px;color:var(--teal);margin-top:4px;}
+  .chips{display:flex;gap:10px;margin-bottom:14px;}
+  .chip{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;}
+  .chip .k{font-size:11px;color:var(--muted);margin:0;} .chip .v{font-size:14px;font-weight:600;margin:2px 0 0;}
+  .stats{display:flex;text-align:center;margin-bottom:16px;}
+  .stats div{flex:1;} .stats .n{font-size:22px;font-weight:600;} .stats .l{font-size:11px;color:var(--muted);}
+  h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:18px 0 8px;font-weight:600;}
+  .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);}
+  .row:last-child{border-bottom:0;}
+  .row .main{font-size:14px;} .row .sub{font-size:12px;color:var(--muted);margin-top:2px;}
+  .row .right{font-size:12px;color:var(--muted);text-align:right;white-space:nowrap;}
+  .pill{display:inline-block;font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600;}
+  .pill.ok{background:var(--teal-bg);color:var(--teal);} .pill.todo{background:var(--amber-bg);color:var(--amber-ink);}
+  .leg{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .leg:last-child{border-bottom:0;}
+  .leg .dot{width:10px;height:10px;border-radius:50%;background:var(--coral);margin-top:5px;flex:none;}
+  .day{margin-bottom:10px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;}
+  .day summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;}
+  .day summary::-webkit-details-marker{display:none;}
+  .day .dn{font-size:11px;color:var(--coral-ink);} .day .dt{font-size:14px;font-weight:600;}
+  .day .body{padding:0 14px 12px;}
+  a.tel{color:var(--teal);text-decoration:none;font-weight:600;}
+  a.lnk{color:var(--coral);text-decoration:none;}
+  nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);
+    display:flex;max-width:520px;margin:0 auto;}
+  nav button{flex:1;background:none;border:0;padding:8px 0 10px;color:var(--muted);font-size:10px;cursor:pointer;}
+  nav button .ic{font-size:21px;display:block;line-height:1.2;}
+  nav button.active{color:var(--coral);}
+  #gate{max-width:360px;margin:0 auto;padding:64px 24px;text-align:center;}
+  #gate h1{font-size:22px;color:#4A1B0C;}
+  #gate input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:16px;margin:14px 0;}
+  #gate button{width:100%;padding:12px;border:0;border-radius:10px;background:var(--coral);color:#fff;font-size:15px;font-weight:600;cursor:pointer;}
+  #gate .err{color:#A32D2D;font-size:13px;min-height:18px;}
+  .empty{color:var(--muted);font-size:13px;padding:8px 0;}
+</style>
+</head>
+<body>
+
+<div id="gate" style="display:none">
+  <div style="font-size:40px">🌺</div>
+  <h1>Hawaii ʻOhana Reunion</h1>
+  <p style="color:#8a7d72;font-size:14px">Enter the family passcode to view the trip.</p>
+  <input id="pin" type="password" inputmode="text" placeholder="Family passcode" autocomplete="off" />
+  <div class="err" id="gateErr"></div>
+  <button id="enterBtn">View the trip</button>
+</div>
+
+<div class="wrap" id="app" style="display:none">
+  <header><p class="eyebrow" id="hDates">July 26 – August 7, 2026</p><h1>Hawaii ʻOhana Reunion</h1></header>
+
+  <section class="screen active" id="s-home"></section>
+  <section class="screen" id="s-flights"></section>
+  <section class="screen" id="s-stays"></section>
+  <section class="screen" id="s-days"></section>
+  <section class="screen" id="s-info"></section>
+
+  <nav>
+    <button data-s="home" class="active"><span class="ic">🏝️</span>Home</button>
+    <button data-s="flights"><span class="ic">✈️</span>Flights</button>
+    <button data-s="stays"><span class="ic">🛏️</span>Stays</button>
+    <button data-s="days"><span class="ic">📅</span>Days</button>
+    <button data-s="info"><span class="ic">☎️</span>Info</button>
+  </nav>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const isOk=s=>/confirm|✅/i.test(s||''); const isTodo=s=>/book|to do|☐|tbd/i.test(s||'');
+
+async function boot(){
+  const r=await fetch('/api/data');
+  if(r.status===401){ $('#gate').style.display='block'; $('#app').style.display='none'; return; }
+  const data=await r.json();
+  $('#gate').style.display='none'; $('#app').style.display='block';
+  render(data);
+}
+$('#enterBtn').onclick=login; $('#pin').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
+async function login(){
+  $('#gateErr').textContent='';
+  const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:$('#pin').value})});
+  if(r.ok) boot(); else $('#gateErr').textContent=(await r.json()).error||'Try again';
+}
+
+function render(d){
+  renderHome(d); renderFlights(d.flights||[]); renderStays(d.lodging||[]);
+  renderDays(d.schedule||[]); renderInfo(d.contacts_links||[]);
+}
+
+function renderHome(d){
+  const trip={}; (d.trip||[]).forEach(r=>trip[(r.Item||'').toLowerCase()]=r.Detail||'');
+  const ms=new Date('2026-07-26T00:00:00')-new Date(); const days=Math.max(0,Math.ceil(ms/86400000));
+  const resv=d.reservations||[];
+  const resHtml=resv.map(r=>{
+    const st=r.Status||''; const cls=isOk(st)?'ok':(isTodo(st)?'todo':'todo');
+    const lbl=isOk(st)?'confirmed':'to book';
+    return `<div class="row"><div><div class="main">${esc(r.Item)}</div><div class="sub">${esc(r.Date)} ${esc(r.Time)}</div></div><div class="right"><span class="pill ${cls}">${lbl}</span></div></div>`;
+  }).join('')||'<div class="empty">No reservations listed.</div>';
+  $('#s-home').innerHTML=`
+    <div class="countdown"><div class="n">${days}</div><div class="l">days to go</div></div>
+    <div class="chips">
+      <div class="chip"><p class="k">Oahu</p><p class="v">Jul 26–31</p></div>
+      <div class="chip"><p class="k">Maui</p><p class="v">Jul 31–Aug 6</p></div>
+    </div>
+    <div class="stats"><div><div class="n">16</div><div class="l">people</div></div><div><div class="n">7</div><div class="l">keiki</div></div><div><div class="n">12</div><div class="l">days</div></div></div>
+    <h2 class="sec">Reservations</h2><div class="card">${resHtml}</div>`;
+}
+
+function renderFlights(f){
+  const html=f.map(l=>`<div class="leg"><div class="dot"></div><div style="flex:1">
+    <div class="main">${esc(l.Leg)} — ${esc(l.Depart)} → ${esc(l.Arrive)}</div>
+    <div class="sub">${esc(l.Date)} · ${esc(l['Flight #'])} ${l.Status?'· '+esc(l.Status):''}</div>
+    ${l.Notes?`<div class="sub">${esc(l.Notes)}</div>`:''}</div></div>`).join('')||'<div class="empty">No flights listed.</div>';
+  $('#s-flights').innerHTML=`<h2 class="sec">Flights</h2><div class="card">${html}</div>`;
+}
+
+function renderStays(rooms){
+  const byProp={}; rooms.forEach(r=>{(byProp[r.Property]=byProp[r.Property]||[]).push(r);});
+  let html='';
+  for(const p in byProp){
+    html+=`<h2 class="sec">${esc(p)}</h2><div class="card">`+byProp[p].map(r=>`
+      <div class="row"><div><div class="main">${esc(r['Room / Villa'])}</div>
+      <div class="sub">${esc(r.Occupants)}${r.Family&&r.Family!=='—'?' · '+esc(r.Family):''}</div></div>
+      <div class="right">conf<br>${esc(r['Confirmation #'])}</div></div>`).join('')+`</div>`;
+  }
+  $('#s-stays').innerHTML=html||'<div class="empty">No lodging listed.</div>';
+}
+
+function renderDays(sch){
+  const days=[]; const idx={};
+  sch.forEach(r=>{ const key=r.Day||r.Date; if(!idx[key]){idx[key]={day:r.Day,date:r.Date,theme:r.Theme,items:[]}; days.push(idx[key]);}
+    if(r.Time||r.Activity) idx[key].items.push(r); });
+  const html=days.map((dd,i)=>`<details class="day" ${i===0?'open':''}>
+    <summary><div><div class="dn">${esc(dd.day)} · ${esc(dd.date)}</div><div class="dt">${esc(dd.theme)}</div></div><span style="color:#8a7d72">▾</span></summary>
+    <div class="body">${dd.items.map(it=>`<div class="row"><div class="right" style="color:#D85A30;min-width:70px;text-align:left">${esc(it.Time)}</div><div style="flex:1"><div class="main">${esc(it.Activity)}</div>${it.Notes?`<div class="sub">${esc(it.Notes)}</div>`:''}</div></div>`).join('')}</div>
+  </details>`).join('')||'<div class="empty">No schedule listed.</div>';
+  $('#s-days').innerHTML=`<h2 class="sec">Day by day</h2>${html}`;
+}
+
+function renderInfo(c){
+  const byType={}; c.forEach(r=>{(byType[r.Type]=byType[r.Type]||[]).push(r);});
+  let html='';
+  for(const t in byType){
+    html+=`<h2 class="sec">${esc(t)}</h2><div class="card">`+byType[t].map(r=>{
+      const phone=(r.Phone||'').replace(/[^0-9+]/g,'');
+      const url=r['Address / URL']||'';
+      const isLink=/^https?:|\./.test(url)&&!/\s/.test(url)&&/\.[a-z]{2,}/i.test(url)&&!/\d{2,}\s/.test(url);
+      const right=phone&&phone.length>=7?`<a class="tel" href="tel:${esc(phone)}">${esc(r.Phone)}</a>`:'';
+      return `<div class="row"><div><div class="main">${esc(r.Name)}</div>
+        <div class="sub">${isLink?`<a class="lnk" href="https://${url.replace(/^https?:\/\//,'')}" target="_blank" rel="noopener">${esc(url)}</a>`:esc(url)}${r.Notes?' · '+esc(r.Notes):''}</div></div>
+        <div class="right">${right}</div></div>`;
+    }).join('')+`</div>`;
+  }
+  $('#s-info').innerHTML=html||'<div class="empty">No contacts listed.</div>';
+}
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); $('#s-'+b.dataset.s).classList.add('active');
+  window.scrollTo(0,0);
+});
+
+boot();
+</script>
+</body>
+</html>

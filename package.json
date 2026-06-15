@@ -1,0 +1,17 @@
+{
+  "name": "hawaii-ohana-2026",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read-only family planning app for the Hawaii ʻOhana Reunion 2026. Reads a Google Sheet as the source of truth.",
+  "main": "server/index.js",
+  "scripts": { "start": "node server/index.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "googleapis": "^140.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0"
+  }
+}
